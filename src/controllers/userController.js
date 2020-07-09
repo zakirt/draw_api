@@ -6,7 +6,8 @@ const authService = new AuthService();
 
 module.exports.loginUser = async (ctx) => {
     try {
-        await authService.signInWithEmailAndPassword('test@test3.com', '123');
+        const { email, password } = ctx.request.body;
+        await authService.signInWithEmailAndPassword(email, password);
     } catch (e) {
         ctx.throw(e);
     }
