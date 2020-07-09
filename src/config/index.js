@@ -20,5 +20,9 @@ module.exports.firebaseErrors = {
     'auth/weak-password': {
         status: 409,
         message: 'Password should be at least 6 characters.'
+    },
+    'auth/invalid-custom-token': {
+        status: 401,
+        message: 'Authentication required.'
     }
 };

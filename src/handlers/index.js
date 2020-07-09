@@ -16,18 +16,15 @@ module.exports.topErrorHandler = async (ctx, next) => {
 };
 
 module.exports.requireAuth = async (ctx, next) => {
-    const ctxThrow = (message) => ctx.throw(401, 'unauthorized', {
-        message
-    });
     const { headers } = ctx.request;
     const token = getAuthTokenFromHeader(headers.authorization);
     if (!token) {
-        ctxThrow();
+        ctxThrow('auth/invalid-custom-token');
     }
     try {
         await authService.verifyJwtToken(token);
         next();
     } catch (e) {
-        ctxThrow(e.message);
+        throw e;
     }
 };
