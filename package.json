@@ -1,0 +1,29 @@
+{
+  "name": "drawing_service",
+  "version": "1.0.0",
+  "description": "Back-end service for the TalkSpace coding challenge drawing app.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "jest",
+    "test:tdd": "jest --watch",
+    "test:coverage": "jest --coverage --colors"
+  },
+  "keywords": [
+    "TalkSpace",
+    "drawing"
+  ],
+  "author": "Zakir Tariverdiev <zakir.tariverdiev@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^7.15.5",
+    "firebase-admin": "^8.13.0",
+    "koa": "~2.13.0",
+    "koa-bodyparser": "~4.3.0",
+    "koa-router": "~9.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0"
+  }
+}
