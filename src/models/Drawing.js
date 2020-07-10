@@ -5,7 +5,7 @@ module.exports = class Drawing {
         userId,
         dateCreated,
         dataUrl,
-        isPrivate
+        isPrivate = false
     }) {
         this.userId = userId;
         this.dateCreated = dateCreated;

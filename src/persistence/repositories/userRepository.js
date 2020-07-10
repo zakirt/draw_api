@@ -23,4 +23,15 @@ module.exports = class UserRepository {
             throw e;
         }
     }
+
+    async removeDrawingFromUser(userId, drawingId) {
+        try {
+            const updates = {
+                [`/${userId}/drawings/${drawingId}`]: null
+            };
+            return await this.dbContext.update(updates);
+        } catch (e) {
+            throw e;
+        }
+    }
 };

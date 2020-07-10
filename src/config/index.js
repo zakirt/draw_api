@@ -36,5 +36,9 @@ module.exports.responseErrors = {
     'auth/user-not-found': {
         status: 404,
         message: 'User account not found.'
+    },
+    'resource-not-found': {
+        status: 404,
+        message: 'Specified resource not found.'
     }
 };
