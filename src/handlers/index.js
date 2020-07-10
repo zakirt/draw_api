@@ -13,7 +13,9 @@ module.exports.topErrorHandler = async (ctx, next) => {
         console.error(e);
         const error = getResponseError(e);
         ctx.response.status = error.status;
-        ctx.response.body = error;
+        ctx.response.body = {
+            error
+        };
     }
 };
 

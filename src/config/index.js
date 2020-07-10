@@ -32,5 +32,9 @@ module.exports.responseErrors = {
     'PERMISSION_DENIED': {
         status: 500,
         message: 'We are experiencing technical difficulties. Please try again later.'
+    },
+    'auth/user-not-found': {
+        status: 404,
+        message: 'User account not found.'
     }
 };
