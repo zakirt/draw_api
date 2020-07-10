@@ -1,12 +1,18 @@
 'use strict';
 
-const { AuthService } = require('../services');
+const { AuthService, UserService } = require('../services');
+const User = require('../models/User');
 
 const authService = new AuthService();
+const userService = new UserService();
 
 const userValidationConfig = {
     email: 'required|email',
     password: 'required|minLength:6|maxLength:20'
+};
+const registerUserValidationConfig = {
+    displayName: 'required|maxLength:100',
+    ...userValidationConfig
 };
 
 module.exports.loginUser = async (ctx) => {
@@ -29,13 +35,17 @@ module.exports.logoutUser = (ctx) => {
 
 module.exports.registerUser = async (ctx) => {
     try {
-        await ctx.validate(userValidationConfig, ctx.request.body);
-        const { email, password } = ctx.request.body;
-        const res = await authService.createUserWithEmailAndPassword(email, password);
+        await ctx.validate(registerUserValidationConfig, ctx.request.body);
+        const { email, password, displayName } = ctx.request.body;
+        const { userId } = await authService.createUserWithEmailAndPassword(email, password);
+        const user = new User({
+            email,
+            displayName,
+            dateCreated: Date.now()
+        });
+        await userService.createNewUser(userId, user);
         ctx.body = {
-            user: {
-                email: res
-            }
+            user
         };
     } catch (e) {
         ctx.throw(e);

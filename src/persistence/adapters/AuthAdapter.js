@@ -26,8 +26,11 @@ module.exports = class AuthAdapter {
     async createUserWithEmailAndPassword(email, password) {
         try {
             const result = await this.appAuth.createUserWithEmailAndPassword(email, password);
-            const { email: userEmail } = result.user;
-            return userEmail;
+            const { email: userEmail, uid: userId } = result.user;
+            return {
+                email: userEmail,
+                userId
+            };
         } catch (e) {
             throw e;
         }
