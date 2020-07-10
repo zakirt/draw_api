@@ -15,7 +15,7 @@ app.use(bodyParser({
     extendTypes: {
         json: [JSON_API_HEADER]
     },
-    onerror({ message }, ctx) {
+    onerror({ message }) {
         const e = new Error(message);
         e.code = 'malformed-request';
         throw e;

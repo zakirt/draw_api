@@ -4,12 +4,14 @@ const { AuthService } = require('../services');
 
 const authService = new AuthService();
 
+const userValidationConfig = {
+    email: 'required|email',
+    password: 'required|minLength:6|maxLength:20'
+};
+
 module.exports.loginUser = async (ctx) => {
     try {
-        await ctx.validate({
-            email: 'required|email',
-            password: 'required|minLength:6|maxLength:20'
-        }, ctx.request.body);
+        await ctx.validate(userValidationConfig, ctx.request.body);
         const { email, password } = ctx.request.body;
         const token = await authService.signInWithEmailAndPassword(email, password);
         ctx.body = {
@@ -27,7 +29,14 @@ module.exports.logoutUser = (ctx) => {
 
 module.exports.registerUser = async (ctx) => {
     try {
-        await authService.createUserWithEmailAndPassword('test@test3.com', '123');
+        await ctx.validate(userValidationConfig, ctx.request.body);
+        const { email, password } = ctx.request.body;
+        const res = await authService.createUserWithEmailAndPassword(email, password);
+        ctx.body = {
+            user: {
+                email: res
+            }
+        };
     } catch (e) {
         ctx.throw(e);
     }

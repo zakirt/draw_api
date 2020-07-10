@@ -12,7 +12,12 @@ module.exports = class AuthAdapter {
     async verifyJwtToken(token) {
         try {
             const result = await this.appAuth.signInWithCustomToken(token);
-            return result;
+            const { uid: userId, displayName, email } = result.user;
+            return {
+                userId,
+                displayName,
+                email
+            };
         } catch (e) {
             throw e;
         }
@@ -21,7 +26,8 @@ module.exports = class AuthAdapter {
     async createUserWithEmailAndPassword(email, password) {
         try {
             const result = await this.appAuth.createUserWithEmailAndPassword(email, password);
-            return result;
+            const { email: userEmail } = result.user;
+            return userEmail;
         } catch (e) {
             throw e;
         }

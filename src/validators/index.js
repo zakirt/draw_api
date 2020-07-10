@@ -2,16 +2,10 @@
 
 const niv = require('node-input-validator');
 
-// const rhinoSpecies = new Map([
-//     ['white_rhinoceros', true],
-//     ['black_rhinoceros', true],
-//     ['indian_rhinoceros', true],
-//     ['javan_rhinoceros', true],
-//     ['sumatran_rhinoceros', true]
-// ]);
+const jwtTokenRegex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*/;
 
-// niv.extend('rhinocerosSpecies', ({ value }) => {
-//     return rhinoSpecies.has(value);
-// });
+niv.extend('jwtToken', ({ value }) => {
+    return jwtTokenRegex.test(value);
+});
 
 module.exports = niv;
