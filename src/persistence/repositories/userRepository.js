@@ -1,9 +1,15 @@
 'use strict';
 
 module.exports = class UserRepository {
-    constructor(dbContext) {}
+    constructor(dbContext) {
+        this.dbContext = dbContext;
+    }
 
-    verifyJwtToken(token) {
-
+    async writeUserData(userId, userData) {
+        try {
+            return await this.dbContext.child(userId).set(userData);
+        } catch (e) {
+            throw e;
+        }
     }
 };

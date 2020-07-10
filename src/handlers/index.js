@@ -28,8 +28,9 @@ module.exports.requireAuth = async (ctx, next) => {
         if (!matched) {
             throwAuthError(validator.errors.token.message);
         }
-        await authService.verifyJwtToken(token);
-        next();
+        const result = await authService.verifyJwtToken(token);
+        ctx.state.user = result;
+        await next();
     } catch (e) {
         throw e;
     }

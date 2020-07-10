@@ -28,5 +28,9 @@ module.exports.responseErrors = {
     'malformed-request': {
         status: 400,
         message: 'Malformed, or invalid request.'
+    },
+    'PERMISSION_DENIED': {
+        status: 500,
+        message: 'We are experiencing technical difficulties. Please try again later.'
     }
 };

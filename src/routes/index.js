@@ -12,7 +12,7 @@ router.post('/user/login', loginUser);
 router.post('/user/logout', requireAuth, logoutUser);
 router.put('/user/register', registerUser);
 
-//  Draw routes
-router.put('/draw/save', requireAuth, saveDrawing);
+// Drawing routes
+router.put('/drawing/save', requireAuth, saveDrawing);
 
 module.exports = router;
