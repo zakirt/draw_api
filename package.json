@@ -14,6 +14,7 @@
     "drawing"
   ],
   "author": "Zakir Tariverdiev <zakir.tariverdiev@gmail.com>",
+  "repository": "github:zakirt/draw_api",
   "license": "ISC",
   "dependencies": {
     "firebase": "^7.15.5",
