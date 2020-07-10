@@ -9,7 +9,8 @@ module.exports = class DrawingService {
 
     async saveDrawing(drawing) {
         try {
-            return await this.unitOfWork.drawings.writeDrawing(drawing);
+            const { drawingId } = await this.unitOfWork.drawings.writeDrawing(drawing);
+            await this.unitOfWork.users.addDrawingForUser(drawing.userId, drawingId);
         } catch (e) {
             throw e;
         }

@@ -11,11 +11,14 @@ module.exports = class DrawingRepository {
         dateCreated
     }) {
         try {
-            return await this.dbContext.push({
+            const result = await this.dbContext.push({
                 userId,
                 dataUrl,
                 dateCreated
             });
+            return {
+                drawingId: result.key
+            };
         } catch (e) {
             throw e;
         }

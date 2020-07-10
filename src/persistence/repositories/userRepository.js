@@ -12,4 +12,15 @@ module.exports = class UserRepository {
             throw e;
         }
     }
+
+    async addDrawingForUser(userId, drawingId) {
+        try {
+            const updates = {
+                [`/${userId}/drawings/${drawingId}`]: true
+            };
+            return await this.dbContext.update(updates);
+        } catch (e) {
+            throw e;
+        }
+    }
 };
