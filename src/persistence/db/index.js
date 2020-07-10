@@ -11,12 +11,14 @@ const firebaseApp = firebase.initializeApp({
 
 module.exports.firebaseAdmin = firebaseAdmin.initializeApp({
     databaseURL: 'https://draw-api.firebaseio.com/',
-    credential: admin.credential.cert(serviceAccount)
+    credential: firebaseAdmin.credential.cert(serviceAccount)
 });
 
 module.exports.firebaseAdminAuth = firebaseAdmin.auth();
 
 module.exports.firebaseApp = firebaseApp;
+
+module.exports.firebaseAppAuth = firebaseApp.auth();
 
 module.exports.requireAuth = async (ctx, next) => {
     const ctxThrow = (message) => ctx.throw(401, 'unauthorized', {
@@ -28,7 +30,7 @@ module.exports.requireAuth = async (ctx, next) => {
         ctxThrow();
     }
     try {
-        await admin.auth().verifyIdToken(token);
+        await firebaseAdmin.auth().verifyIdToken(token);
         next();
     } catch (e) {
         ctxThrow(e.message);

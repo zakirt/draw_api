@@ -6,8 +6,16 @@ const authService = new AuthService();
 
 module.exports.loginUser = async (ctx) => {
     try {
+        await ctx.validate({
+            email: 'required|email',
+            password: 'required|minLength:6|maxLength:20'
+        }, ctx.request.body);
         const { email, password } = ctx.request.body;
-        await authService.signInWithEmailAndPassword(email, password);
+        const token = await authService.signInWithEmailAndPassword(email, password);
+        ctx.body = {
+            email,
+            token
+        };
     } catch (e) {
         ctx.throw(e);
     }

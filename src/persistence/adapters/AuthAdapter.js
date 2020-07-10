@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = class Auth {
+module.exports = class AuthAdapter {
     constructor({
         appAuth,
         adminAuth

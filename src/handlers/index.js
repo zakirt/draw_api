@@ -1,6 +1,6 @@
 'use strict';
 
-const { fromFirebaseError, getAuthTokenFromHeader } = require('../utils');
+const { getResponseError, getAuthTokenFromHeader } = require('../utils');
 const { AuthService } = require('../services');
 
 const authService = new AuthService();
@@ -9,7 +9,8 @@ module.exports.topErrorHandler = async (ctx, next) => {
     try {
         await next();
     } catch (e) {
-        const error = fromFirebaseError(e);
+        console.error(e);
+        const error = getResponseError(e);
         ctx.response.status = error.status;
         ctx.response.body = error;
     }
