@@ -7,6 +7,9 @@
         "node": true,
         "jest": true
     },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
     "rules": {
         "strict": [2, "global"],
         "indent": [

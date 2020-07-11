@@ -1,5 +1,7 @@
 'use strict';
 
+const AuthError = require('../errors/AuthError');
+
 module.exports = class AuthAdapter {
     constructor({
         appAuth,
@@ -19,7 +21,7 @@ module.exports = class AuthAdapter {
                 email
             };
         } catch (e) {
-            throw e;
+            throw new AuthError(e);
         }
     }
 
@@ -32,7 +34,7 @@ module.exports = class AuthAdapter {
                 userId
             };
         } catch (e) {
-            throw e;
+            throw new AuthError(e);
         }
     }
 
@@ -42,7 +44,7 @@ module.exports = class AuthAdapter {
             const { uid } = result.user;
             return await this.adminAuth.createCustomToken(uid);
         } catch (e) {
-            throw e;
+            throw new AuthError(e);
         }
     }
 };

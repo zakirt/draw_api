@@ -2,12 +2,14 @@
 
 module.exports = class Drawing {
     constructor({
-        userId,
+        creatorId,
+        creatorName = null,
         dateCreated,
         dataUrl,
         isPrivate = false
     }) {
-        this.userId = userId;
+        this.creatorId = creatorId;
+        this.creatorName = creatorName;
         this.dateCreated = dateCreated;
         this.dataUrl = dataUrl;
         this.isPrivate = isPrivate;

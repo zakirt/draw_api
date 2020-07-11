@@ -1,5 +1,7 @@
 'use strict';
 
+const RepositoryError = require('../errors/RepositoryError');
+
 module.exports = class UserRepository {
     constructor(dbContext) {
         this.dbContext = dbContext;
@@ -9,7 +11,7 @@ module.exports = class UserRepository {
         try {
             return await this.dbContext.child(userId).set(userData);
         } catch (e) {
-            throw e;
+            throw new RepositoryError(e);
         }
     }
 
@@ -20,7 +22,7 @@ module.exports = class UserRepository {
             };
             return await this.dbContext.update(updates);
         } catch (e) {
-            throw e;
+            throw new RepositoryError(e);
         }
     }
 
@@ -31,7 +33,16 @@ module.exports = class UserRepository {
             };
             return await this.dbContext.update(updates);
         } catch (e) {
-            throw e;
+            throw new RepositoryError(e);
+        }
+    }
+
+    async getUserById(userId) {
+        try {
+            const result = await this.dbContext.child(userId).once('value');
+            return result.val();
+        } catch (e) {
+            new RepositoryError(e);
         }
     }
 };

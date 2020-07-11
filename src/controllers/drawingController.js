@@ -5,12 +5,23 @@ const Drawing = require('../models/Drawing');
 
 const drawingService = new DrawingService();
 
+module.exports.listDrawings = async (ctx) => {
+    try {
+        const drawings = await drawingService.getListOfDrawings();
+        ctx.body = {
+            drawings
+        };
+    } catch (e) {
+        ctx.throw(e);
+    }
+};
+
 module.exports.saveDrawing = async (ctx) => {
     try {
-        const { userId } = ctx.state.user;
+        const { userId: creatorId } = ctx.state.user;
         const { dataUrl, isPrivate } = ctx.request.body;
         const drawing = new Drawing({
-            userId,
+            creatorId,
             dateCreated: Date.now(),
             dataUrl,
             isPrivate
