@@ -19,12 +19,11 @@ module.exports.listDrawings = async (ctx) => {
 module.exports.saveDrawing = async (ctx) => {
     try {
         const { userId: creatorId } = ctx.state.user;
-        const { dataUrl, isPrivate } = ctx.request.body;
         const drawing = new Drawing({
-            creatorId,
-            dateCreated: Date.now(),
-            dataUrl,
-            isPrivate
+            ...{
+                creatorId,
+                dateCreated: Date.now()
+            }, ...ctx.request.body
         });
         const res = await drawingService.saveDrawing(drawing);
         ctx.body = res;
@@ -36,7 +35,8 @@ module.exports.saveDrawing = async (ctx) => {
 module.exports.deleteDrawing = async (ctx) => {
     try {
         const { id } = ctx.params;
-        await drawingService.deleteDrawing(id);
+        const { userId: creatorId } = ctx.state.user;
+        await drawingService.deleteDrawing(id, creatorId);
         ctx.body = '';
     } catch (e) {
         ctx.throw(e);

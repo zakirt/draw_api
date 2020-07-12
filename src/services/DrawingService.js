@@ -23,11 +23,15 @@ module.exports = class DrawingService {
         };
     }
 
-    async deleteDrawing(drawingId) {
-        const drawing = await this.unitOfWork.drawings.deleteDrawingById(drawingId);
+    async deleteDrawing(drawingId, creatorId) {
+        const drawing = await this.unitOfWork.drawings.getDrawingById(drawingId);
         if (!drawing) {
             throwDrawingNotFoundError(`Could not locate drawing for ID ${drawingId}.`);
         }
+        if (drawing.creatorId !== creatorId) {
+            throwDrawingNotFoundError(`Drawing ${drawingId} does not belong to user ${creatorId}.`);
+        }
+        await this.unitOfWork.drawings.deleteDrawingById(drawingId);
         await this.unitOfWork.users.removeDrawingFromUser(drawing.creatorId, drawingId);
     }
 };
