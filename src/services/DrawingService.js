@@ -6,7 +6,16 @@ module.exports = class DrawingService {
     }
 
     async getListOfDrawings() {
-        return await this.unitOfWork.drawings.getMostRecentDrawings();
+        return await this.unitOfWork.drawings.getPublicDrawings();
+    }
+
+    async getDrawing(drawingId) {
+        const drawing = await this.unitOfWork.drawings.getDrawingById(drawingId);
+        if (!drawing) {
+            throwDrawingNotFoundError(`Could not locate drawing for ID ${drawingId}.`);
+        }
+        delete drawing.creatorId;
+        return drawing;
     }
 
     async saveDrawing(drawing) {

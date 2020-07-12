@@ -7,11 +7,12 @@ The API service is using Firebase for storage and authentication.
 
 The following routes are exposed by the API service:
 
-* /user/login
-* /user/register
-* /drawing/list
-* /drawing/save
-* /drawing/delete/:id
+* **POST** /user/login - sign in user
+* **PUT** /user/register - create new user
+* **GET** /drawing/list - retrieve a list of public drawings
+* **PUT** /drawing - save drawing
+* **GET** /drawing/:id - retrieve a drawing created by any user (includes public  & private drawings)
+* **DELETE** /drawing/delete/:id - delete specified drawing. Only deletes drawings belonging to the logged in user.
 
 All routes, except **register**, expect valid auth token to be present in the request header.
 

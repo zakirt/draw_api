@@ -61,4 +61,19 @@ module.exports = class DrawingRepository {
             throw new RepositoryError(e);
         }
     }
+
+    async getPublicDrawings(limit = 10) {
+        try {
+            const result = await this
+                .dbContext
+                .orderByChild('isPrivate')
+                .equalTo(false)
+                .limitToFirst(Math.min(limit, MAX_DRAWING_ENTRIES_TO_QUERY))
+                .once('value');
+            const drawings = drawingDtoCollectionToModel(result.val());
+            return drawings;
+        } catch (e) {
+            throw new RepositoryError(e);
+        }
+    }
 };

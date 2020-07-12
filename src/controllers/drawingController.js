@@ -9,7 +9,20 @@ module.exports.listDrawings = async (ctx) => {
     try {
         const drawings = await drawingService.getListOfDrawings();
         ctx.body = {
+            total: drawings.length,
             drawings
+        };
+    } catch (e) {
+        ctx.throw(e);
+    }
+};
+
+module.exports.getDrawing = async (ctx) => {
+    try {
+        const { id } = ctx.params;
+        const drawing = await drawingService.getDrawing(id);
+        ctx.body = {
+            drawing
         };
     } catch (e) {
         ctx.throw(e);
