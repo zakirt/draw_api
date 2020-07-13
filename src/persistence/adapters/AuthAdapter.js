@@ -46,7 +46,11 @@ module.exports = class AuthAdapter {
             const user = result.user;
             const userId =  user.uid;
             const token = await this.adminAuth.createCustomToken(userId);
-            const { displayName, dateCreated } = await this.unitOfWork.users.getUserById(userId);
+            const existingUser = await this.unitOfWork.users.getUserById(userId);
+            if (!existingUser) {
+                throw new Error('AuthAdapter.signInWithEmailAndPassword(): failed to retrieve user from DB.');
+            }
+            const { displayName, dateCreated } = existingUser;
             return {
                 userId,
                 token,
