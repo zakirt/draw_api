@@ -20,6 +20,7 @@
   "dependencies": {
     "firebase": "^7.15.5",
     "firebase-admin": "^8.13.0",
+    "jsonapi-serializer": "~3.6.6",
     "koa": "~2.13.0",
     "koa-bodyparser": "~4.3.0",
     "koa-router": "~9.1.0",

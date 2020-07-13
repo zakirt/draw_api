@@ -2,6 +2,7 @@
 
 const { AuthService, UserService } = require('../services');
 const User = require('../models/User');
+const { userSerializer } = require('../serializers');
 
 const authService = new AuthService();
 const userService = new UserService();
@@ -19,11 +20,8 @@ module.exports.loginUser = async (ctx) => {
     try {
         await ctx.validate(userValidationConfig, ctx.request.body);
         const { email, password } = ctx.request.body;
-        const token = await authService.signInWithEmailAndPassword(email, password);
-        ctx.body = {
-            email,
-            token
-        };
+        const user = await authService.signInWithEmailAndPassword(email, password);
+        ctx.body = userSerializer.serialize(user);
     } catch (e) {
         ctx.throw(e);
     }
@@ -44,9 +42,7 @@ module.exports.registerUser = async (ctx) => {
             dateCreated: Date.now()
         });
         await userService.createNewUser(userId, user);
-        ctx.body = {
-            user
-        };
+        ctx.body = userSerializer.serialize(user);
     } catch (e) {
         ctx.throw(e);
     }

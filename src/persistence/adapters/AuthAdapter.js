@@ -5,10 +5,12 @@ const AuthError = require('../errors/AuthError');
 module.exports = class AuthAdapter {
     constructor({
         appAuth,
-        adminAuth
+        adminAuth,
+        unitOfWork
     }) {
         this.appAuth = appAuth;
         this.adminAuth = adminAuth;
+        this.unitOfWork = unitOfWork;
     }
 
     async verifyJwtToken(token) {
@@ -41,8 +43,17 @@ module.exports = class AuthAdapter {
     async signInWithEmailAndPassword(email, password) {
         try {
             const result = await this.appAuth.signInWithEmailAndPassword(email, password);
-            const { uid } = result.user;
-            return await this.adminAuth.createCustomToken(uid);
+            const user = result.user;
+            const userId =  user.uid;
+            const token = await this.adminAuth.createCustomToken(userId);
+            const { displayName, dateCreated } = await this.unitOfWork.users.getUserById(userId);
+            return {
+                userId,
+                token,
+                email: user.email,
+                displayName,
+                dateCreated
+            };
         } catch (e) {
             throw new AuthError(e);
         }
