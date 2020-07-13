@@ -2,16 +2,14 @@
 
 const { DrawingService } = require('../services');
 const Drawing = require('../models/Drawing');
+const { drawingSerializer } = require('../serializers');
 
 const drawingService = new DrawingService();
 
 module.exports.listDrawings = async (ctx) => {
     try {
         const drawings = await drawingService.getListOfDrawings();
-        ctx.body = {
-            total: drawings.length,
-            drawings
-        };
+        ctx.body = drawingSerializer.serialize(drawings);
     } catch (e) {
         ctx.throw(e);
     }
@@ -21,9 +19,7 @@ module.exports.getDrawing = async (ctx) => {
     try {
         const { id } = ctx.params;
         const drawing = await drawingService.getDrawing(id);
-        ctx.body = {
-            drawing
-        };
+        ctx.body = drawingSerializer.serialize(drawing);
     } catch (e) {
         ctx.throw(e);
     }
@@ -39,7 +35,7 @@ module.exports.saveDrawing = async (ctx) => {
             }, ...ctx.request.body
         });
         const res = await drawingService.saveDrawing(drawing);
-        ctx.body = res;
+        ctx.body = drawingSerializer.serialize(res);
     } catch (e) {
         ctx.throw(e);
     }

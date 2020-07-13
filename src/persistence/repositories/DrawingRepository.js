@@ -27,7 +27,10 @@ module.exports = class DrawingRepository {
                 .dbContext
                 .child(drawingId)
                 .once('value');
-            return result.val();
+            return {
+                drawingId,
+                ...result.val()
+            };
         } catch (e) {
             throw new RepositoryError(e);
         }

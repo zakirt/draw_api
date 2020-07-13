@@ -6,13 +6,14 @@ const DS = require('./DrawingService');
 const User = require('./UserService');
 const UnitOfWork = require('../persistence/UnitOfWork');
 
-module.exports.AuthService = singletonify(AuthAdapter, {
-    appAuth: firebaseAppAuth,
-    adminAuth: firebaseAdminAuth
-});
-
 const dbContext = firebaseApp.database();
 const unitOfWork = new UnitOfWork(dbContext);
+
+module.exports.AuthService = singletonify(AuthAdapter, {
+    appAuth: firebaseAppAuth,
+    adminAuth: firebaseAdminAuth,
+    unitOfWork
+});
 
 module.exports.DrawingService = singletonify(DS, unitOfWork);
 

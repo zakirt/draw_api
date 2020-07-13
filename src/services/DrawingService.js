@@ -27,7 +27,7 @@ module.exports = class DrawingService {
         const { drawingId } = await this.unitOfWork.drawings.writeDrawing(drawing);
         await this.unitOfWork.users.addDrawingForUser(drawing.creatorId, drawingId);
         return {
-            id: drawingId,
+            drawingId,
             dateCreated: drawing.dateCreated
         };
     }
