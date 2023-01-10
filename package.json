@@ -19,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "firebase": "^7.15.5",
-    "firebase-admin": "^8.13.0",
+    "firebase-admin": "^11.4.1",
     "jsonapi-serializer": "~3.6.6",
     "koa": "~2.13.0",
     "koa-bodyparser": "~4.3.0",
